@@ -1,11 +1,11 @@
 <template lang="">
     <div>
-        Home page
+        Register page
     </div>
 </template>
 <script>
 export default {
-    
+    name: 'RegisterView',
 }
 </script>
 <style lang="">

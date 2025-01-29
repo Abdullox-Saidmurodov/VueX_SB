@@ -1,0 +1,1 @@
+export const logo = 'https://static.vecteezy.com/system/resources/thumbnails/004/701/751/small/ab-letter-logo-concept-isolated-on-white-background-vector.jpg'
