@@ -6,9 +6,9 @@
                 <img :src="logo" alt="logo" class="w-25" style="width: 100px; cursor: pointer;">
                 <h1 class="h3 mb-3 fw-normal mt-2">Register</h1>
 
-                <Input :label="'Name'" :type="'text'" />
-                <Input :label="'Email'" :type="'email'" />
-                <Input :label="'Password'" :type="'password'" />
+                <Input :label="'Name'" :type="'text'" v-model="username" />
+                <Input :label="'Email'" :type="'email'" v-model="email" />
+                <Input :label="'Password'" :type="'password'" v-model="password" />
 
                 <Button type="submit" :disabled="isLoading" @click="submitHandler">Register</Button>
             </form>
@@ -21,6 +21,9 @@ export default {
     data() {
       return {
         logo,
+        username: '',
+        email: '',
+        password: '',
       }
     },
     computed: {
@@ -32,12 +35,15 @@ export default {
         submitHandler(e) {
             e.preventDefault()
             const  data = {
-                username: "adfdhfbdf",
-                email: "vrfd@sdfvbrbff.ff",
-                password: "jkjdfvrdbsfd",
+                username: this.username,
+                email: this.email,
+                password: this.password,
             }
             this.$store.dispatch('register', data)
-            .then(user => console.log('USER', user))
+            .then(user => {
+                console.log('USER', user)
+                this.$router.push({name: 'home'})
+            })
             .catch(err => console.log("ERROR", err))
         },
     }
