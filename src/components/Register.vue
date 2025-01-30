@@ -10,20 +10,7 @@
                 <Input :label="'Email'" :type="'email'" />
                 <Input :label="'Password'" :type="'password'" />
 
-                <!-- <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Your name">
-                    <label for="floatingInput">Name</label>
-                </div> -->
-                <!-- <div class="form-floating mt-2">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
-                </div> -->
-                <!-- <div class="form-floating mt-2">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                </div> -->
-                <Button type="submit">Register</Button>
-                <!-- <button class="btn btn-primary w-100 py-2 mt-2" type="submit">Sign in</button> -->
+                <Button type="submit" :disabled="isLoading" @click="submitHandler">Register</Button>
             </form>
         </main>
     </div>
@@ -36,6 +23,17 @@ export default {
         logo,
       }
     },
+    computed: {
+        isLoading() {
+            return this.$store.state.auth.isLoading
+        }
+    },
+    methods: {
+        submitHandler(e) {
+            e.preventDefault()
+            this.$store.commit('setLoading')
+        },
+    }
 }
 </script>
 <style lang="">
