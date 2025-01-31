@@ -2,7 +2,7 @@
     <div v-if="isLoading" class="d-flex justify-content-center">
         <Loader />
     </div>
-    <div v-else class="text-center">
+    <div v-else class="">
         <ArticleDetail />
     </div>
 </template>
