@@ -14,6 +14,7 @@ export default {
   mounted() {
     // console.log("Mounted")
     this.$store.dispatch('getUser')
+    // this.$store.dispatch('articles')
   },
 }
 </script>
