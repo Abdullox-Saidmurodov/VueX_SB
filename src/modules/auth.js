@@ -10,9 +10,6 @@ const state = {
 }
 
 const getters = {
-    // currentUser: state => {
-    //     return state.user
-    // },
     [gettersTypes.currentUser]: state => {
         return state.user
     },

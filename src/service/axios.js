@@ -9,7 +9,7 @@ axios.interceptors.request.use(config => {
     const token = getItem('token')
     const authorization = token ? `Token ${token}` : ''
     config.headers.Authorization = authorization
-    console.log(authorization)
+    // console.log(authorization)
     return config
 })
 

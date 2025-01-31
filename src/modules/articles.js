@@ -12,6 +12,7 @@ const mutations = {
         state.isLoading = true
         state.data = null
         state.error = null
+        state.articleDetail = null
     },
     getArticlesSuccess(state, payload) {
         state.isLoading = false
@@ -23,6 +24,7 @@ const mutations = {
     getArticleDetailStart(state) {
         state.isLoading = true
         state.articleDetail = null
+        state.data = null
         state.error = null
     },
     getArticleDetailSuccess(state, payload) {
@@ -36,7 +38,7 @@ const mutations = {
 
 const actions = {
     articles(context) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             context.commit('getArticlesStart')
             ArticleService.articles().then(response => {
                 // console.log("RESPONSE", response)
@@ -49,11 +51,12 @@ const actions = {
         })
     },
     articleDetail(context, slug) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             context.commit('getArticleDetailStart')
             ArticleService.articleDetail(slug).then(res => {
-
-            }).catch(() => {})
+                context.commit('getArticleDetailSuccess', res.data.article)
+                resolve(res.data.article)
+            }).catch(() => context.commit('getArticleDetailFailure'))
         })
     }
 }
