@@ -24,7 +24,7 @@ const mutations = {
     registerFailure(state, payload) {
         state.isLoading = false
         // console.log("PAYLOAD", payload)
-        state.errors = payload
+        state.errors = payload.errors
     },
 }
 
