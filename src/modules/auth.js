@@ -8,9 +8,6 @@ const state = {
 }
 
 const mutations = {
-    // setLoading(state) {
-    //     state.isLoading = true
-    // },
     registerStart(state) {
         state.isLoading = true
         state.user = null
@@ -18,36 +15,54 @@ const mutations = {
     },
     registerSuccess(state, payload) {
         state.isLoading = false
-        // console.log("PAYLOAD", payload)
         state.user = payload
     },
     registerFailure(state, payload) {
         state.isLoading = false
-        // console.log("PAYLOAD", payload)
+        state.errors = payload.errors
+    },
+    loginStart(state) {
+        state.isLoading = true
+        state.user = null
+        state.errors = null
+    },
+    loginSuccess(state, payload) {
+        state.isLoading = false
+        state.user = payload
+    },
+    loginFailure(state, payload) {
+        state.isLoading = false
         state.errors = payload.errors
     },
 }
 
 const actions = {
     register(context, user) {
-        // setTimeout(() => {
-        //     context.commit('setLoading')
-        // }, 2000)
         return new Promise((resolve, reject) => {
             context.commit('registerStart')
             AuthServise.register(user).then(response => {
-                // console.log('Response', response.data.user)
                 context.commit('registerSuccess', response.data.user)
-                // window.localStorage.setItem("token", response.data.user.token)
                 setItem("token", response.data.user.token)
                 resolve(response.data.user)
             }).catch((err) => {
-                // console.log("Error", err.response.data)
                 context.commit('registerFailure', err.response.data)
                 reject(err.response.data)
             })
         })
-    }
+    },
+    login(context, user) {
+        return new Promise((resolve, reject) => {
+            context.commit('loginStart')
+            AuthServise.login(user).then(response => {
+                context.commit('loginSuccess', response.data.user)
+                setItem("token", response.data.user.token)
+                resolve(response.data.user)
+            }).catch((err) => {
+                context.commit('loginFailure', err.response.data)
+                reject(err.response.data)
+            })
+        })
+    },
 }
 
 export default {
