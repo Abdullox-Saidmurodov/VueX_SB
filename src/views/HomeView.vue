@@ -1,9 +1,9 @@
 <template lang="">
-    <!-- <div>
-        Home page 
-    </div> -->
-    <!-- {{data}} -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div v-if="isLoading" class="d-flex justify-content-center">
+        <!-- Loading... -->
+        <Loader />
+    </div>
+    <div v-else class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <ArticleCard v-for="article in data" :article="article" :key="article.id" />
     </div>
 </template>
