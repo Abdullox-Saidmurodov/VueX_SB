@@ -4,14 +4,12 @@
         <img :src="logo" alt="logo" class="w-25" style="width: 100px; cursor: pointer;">
       </RouterLink>
 
-      <!-- {{user}} -->
-      <!-- {{isLoggedIn}} -->
-
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <template v-if="isLoggedIn">
           <RouterLink :to="{name: 'home'}" class="me-3 py-2 link-body-emphasis text-decoration-none">
             {{currentUser.username}}
           </RouterLink>
+          <a href="#" class="me-3 py-2 link-body-emphasis text-decoration-none" @click="logout">Logout</a>
         </template>
         <template v-if="isAnonymous">
           <RouterLink :to="{name: 'login'}" class="me-3 py-2 link-body-emphasis text-decoration-none">Login</RouterLink>
@@ -32,24 +30,16 @@ export default {
       }
     },
     computed: {
-      // ...mapState({
-      //   // currentUser: state => state.auth.user,
-      //   isLoggedIn: state => state.auth.isLoggedIn,
-      // }),
-      // currentUser() {
-      //   return this.$store.getters[gettersTypes.currentUser]
-      // },
-      // isLoggedIn() {
-      //   return this.$store.getters[gettersTypes.isLoggedIn]
-      // },
-      // isAnonymous() {
-      //   return this.$store.getters[gettersTypes.isAnonymous]
-      // },
       ...mapGetters({
         currentUser: gettersTypes.currentUser,
         isLoggedIn: gettersTypes.isLoggedIn,
         isAnonymous: gettersTypes.isAnonymous,
       }),
+    },
+    methods: {
+      logout() {
+        return this.$store.dispatch('logout')
+      },
     },
 }
 </script>
