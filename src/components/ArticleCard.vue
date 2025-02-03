@@ -13,14 +13,12 @@
       >
         <title>Placeholder</title>
         <rect width="100%" height="100%" fill="#55595c"></rect>
-        <!-- <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text> -->
       </svg>
       <div class="card-body">
         <p class="card-title fw-bold">
             {{article.title.slice(0, 35)}}...
         </p>
         <p class="card-text">
-          <!-- {{article.title}} -->
           {{article.body.slice(0, 250)}}...
         </p>
         <div class="d-flex justify-content-between align-items-center card-footer">
@@ -28,12 +26,18 @@
             <button type="button" class="btn btn-sm btn-outline-secondary" @click="navigateHandler">
               Read article
             </button>
-            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">
+            <!-- <button v-if="article.author.usrname == user.username" type="button" class="btn btn-sm btn-outline-secondary">
               Edit
             </button> -->
+            <button v-if="article.author.username == user.username" 
+                    type="button" 
+                    class="btn btn-sm btn-outline-danger"
+                    @click="deleteArticleHandler"
+                    :disabled="isLoading">
+              Delete
+            </button>
           </div>
           <small class="text-body-secondary">
-            <!-- 9 mins -->
             {{new Date(article.createdAt).toLocaleDateString('us')}}
           </small>
         </div>
@@ -43,6 +47,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   props: {
     article: {
@@ -50,9 +56,18 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapState({
+      user: state => state.auth.user,
+      isLoading: state => state.controlArticle.isLoading,
+    }),
+  },
   methods: {
     navigateHandler() {
         return this.$router.push(`/article/${this.article.slug}`)
+    },
+    deleteArticleHandler() {
+      this.$store.dispatch('deleteArticle', this.article.slug).then(() => this.$store.dispatch('articles'))
     },
   },
 };
